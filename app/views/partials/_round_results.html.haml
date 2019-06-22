@@ -1,0 +1,15 @@
+- if @round_result.nil?
+    %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
+    %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
+    %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
+    %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
+
+- else
+    - @round_result.each do |result|
+        - case result
+        - when '+'
+            %button.btn.btn-success.marks{:disabled => "disabled", :type => "button"} +
+        - when '-'
+            %button.btn.btn-primary.marks{:disabled => "disabled", :type => "button"} -
+        - else
+            %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x

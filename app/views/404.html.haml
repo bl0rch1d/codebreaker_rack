@@ -1,0 +1,18 @@
+!!!
+%html.mdl-js{:lang => "en"}
+  %head
+    = render VIEWS[:partial][:_head]
+  %body
+    %section#introduction
+      .container
+        .row.fill-viewport.align-items-center.justify-content-center
+          .col-12.col-md-6
+            .row
+              .col-md-auto
+                %h1.text-white.title 404
+            .row
+              .col-md-auto
+                %h1.text-white.title= I18n.t(:page_not_found)
+            .row
+              .col-md-auto
+                %a.btn.btn-warning.btn-lg.center{:href => "/", :role => "button"}= I18n.t(:home_button)

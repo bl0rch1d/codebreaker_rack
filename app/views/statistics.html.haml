@@ -1,0 +1,17 @@
+!!!
+%html.mdl-js{:lang => "en"}
+  %head
+    = render VIEWS[:partial][:_head]
+  %body
+    %section#introduction
+      .container
+        .row.fill-viewport.align-items-center.justify-content-center
+          .col-12.col-md-6
+            .row
+              .col-md-auto
+                %h1.text-white.title Codebreaker 2019
+            %p.lead.text-white-70= I18n.t(:top_players_title)
+            %hr.mb-4/
+            = render VIEWS[:partial][:_stats]
+            %hr.mb-4/
+            %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}= I18n.t(:home_button)

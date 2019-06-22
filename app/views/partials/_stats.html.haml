@@ -1,0 +1,23 @@
+- if @data.empty?
+  %h1.text-white.title= I18n.t(:empty_stats)
+- else
+  .table-responsive-md.scores
+    %table.table.table-striped.table.table-sm
+      %thead
+      %tr
+        %th{:scope => "col"} #
+        %th{:scope => "col"}= I18n.t('table_rows.name')
+        %th{:scope => "col"}= I18n.t('table_rows.difficulty')
+        %th{:scope => "col"}= I18n.t('table_rows.tries_left')
+        %th{:scope => "col"}= I18n.t('table_rows.hints_left')
+        %th{:scope => "col"}= I18n.t('table_rows.date')
+
+      - @data.each_with_index do |data_set, index|
+        %tbody
+          %tr
+            %th{:scope => "row"}= index + 1
+            %td= data_set[:player_name]
+            %td= data_set[:difficulty][1]
+            %td #{data_set[:tries_used]}/#{data_set[:tries_total]}
+            %td #{data_set[:hints_used]}/#{data_set[:hints_total]}
+            %td= data_set[:datetime]
