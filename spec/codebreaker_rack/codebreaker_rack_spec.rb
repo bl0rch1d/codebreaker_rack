@@ -10,11 +10,19 @@ RSpec.describe CodebreakerRack do
   let(:urls) { Router::URLS }
 
   context 'when path requests' do
+    before do
+      stub_const('Database::PATH', OVERRIDABLE_FILENAME)
+    end
+
+    after do
+      File.delete(OVERRIDABLE_FILENAME) if File.exist?(OVERRIDABLE_FILENAME)
+    end
+
     context 'when #index' do
-      it { expect(get(urls[:index])).to be_ok }
+      it { expect(get(urls[:root])).to be_ok }
 
       it do
-        get urls[:index]
+        get urls[:root]
 
         expect(last_response.body).to include(I18n.t(:player_name_input))
         expect(last_response.body).to include(I18n.t(:difficulty_input))
@@ -23,13 +31,25 @@ RSpec.describe CodebreakerRack do
     end
 
     context 'when #rules' do
+      let(:rules) do
+        [
+          I18n.t('rules_rows.each_guess'),
+          I18n.t('rules_rows.numbers_may'),
+          I18n.t('rules_rows.win_only'),
+          I18n.t('rules_rows.lose_if'),
+          I18n.t('rules_rows.plus_sign'),
+          I18n.t('rules_rows.minus_sign')
+        ]
+      end
+
       it { expect(get(urls[:rules])).to be_ok }
 
       it do
         get urls[:rules]
 
-        expect(last_response.body).to include(I18n.t(:rules))
-        expect(last_response.body).to include(I18n.t(:home_button))
+        rules.each do |rule|
+          expect(last_response.body).to include(rule)
+        end
       end
     end
 
@@ -43,14 +63,6 @@ RSpec.describe CodebreakerRack do
           hints_used: '0',
           player_name: 'dasd',
           datetime: '22 Jun 2019 - 12:40:09' }
-      end
-
-      before do
-        stub_const('Database::PATH', OVERRIDABLE_FILENAME)
-      end
-
-      after do
-        File.delete(OVERRIDABLE_FILENAME) if File.exist?(OVERRIDABLE_FILENAME)
       end
 
       context 'when empty' do
@@ -87,29 +99,22 @@ RSpec.describe CodebreakerRack do
           expect(get(urls[:submit_answer])).to be_redirect
           expect(get(urls[:hint])).to be_redirect
 
-          expect(last_response.header['Location']).to eq(urls[:index])
-        end
-
-        it do
-          get(urls[:game])
-
-          expect(last_response.header['Location']).to eq(urls[:index])
+          expect(last_response.header['Location']).to eq(urls[:root])
         end
       end
 
       context 'when active' do
-        let(:valid_name) { 'Euler' }
-        let(:invalid_name) { 'q' }
+        let(:player_name) { 'Euler' }
         let(:difficulty) { :hacker }
         let(:valid_number) { '1234' }
         let(:tries_count) { BaseController::DIFFICULTIES[difficulty][:tries] }
 
         before do
-          post urls[:game], player_name: valid_name, difficulty: difficulty
+          post urls[:game], player_name: player_name, difficulty: difficulty
         end
 
         it do
-          expect(get(urls[:index])).to be_redirect
+          expect(get(urls[:root])).to be_redirect
           expect(get(urls[:rules])).to be_redirect
           expect(get(urls[:statistics])).to be_redirect
 
@@ -119,18 +124,19 @@ RSpec.describe CodebreakerRack do
           expect(get(urls[:hint])).to be_redirect
         end
 
-        context 'when start' do
+        context 'when start game' do
           context 'with invalid params' do
-            it do
-              post urls[:game], player_name: invalid_name, difficulty: difficulty
+            let(:player_name) { 'a' }
 
+            it do
               expect(last_response).to be_redirect
+              expect(last_response.header['Location']).to eq(urls[:root])
             end
           end
 
           context 'with valid params' do
             it { expect(last_response).to be_ok }
-            it { expect(last_response.body).to include(valid_name) }
+            it { expect(last_response.body).to include(player_name) }
             it { expect(last_response.body).to include(difficulty.to_s) }
 
             it 'saves game to session' do
@@ -138,7 +144,7 @@ RSpec.describe CodebreakerRack do
             end
 
             it 'saves users name to session' do
-              expect(last_request.session[:player].name).to eq(valid_name)
+              expect(last_request.session[:player].name).to eq(player_name)
             end
           end
         end
@@ -162,27 +168,38 @@ RSpec.describe CodebreakerRack do
           end
         end
 
-        context 'when secred code guessed' do
+        context 'when #game_finished' do
           it do
-            stub_const('Database::PATH', OVERRIDABLE_FILENAME)
-
             post urls[:submit_answer], number: last_request.session[:game].instance_variable_get(:@secret).join
 
-            expect(last_request.session).not_to include(:game)
-            expect(last_request.session).not_to include(:player)
-
-            expect(last_response.body).to include(I18n.t(:congrats, player_name: valid_name, status: :win))
+            expect(last_response).to be_redirect
+            expect(last_response.header['Location']).to eq(urls[:game_results])
           end
-        end
 
-        context 'when tries exceeded' do
-          it do
-            5.times { post urls[:submit_answer], number: valid_number }
+          context 'when secred code guessed' do
+            it do
+              post urls[:submit_answer], number: last_request.session[:game].instance_variable_get(:@secret).join
 
-            expect(last_request.session).not_to include(:game)
-            expect(last_request.session).not_to include(:player)
+              expect(get(urls[:game_results])).to be_ok
 
-            expect(last_response.body).to include(I18n.t(:oops, player_name: valid_name, status: :lose))
+              expect(last_request.session).not_to include(:game)
+              expect(last_request.session).not_to include(:player)
+
+              expect(last_response.body).to include(I18n.t(:congrats, player_name: player_name, status: :win))
+            end
+          end
+
+          context 'when tries exceeded' do
+            it do
+              5.times { post urls[:submit_answer], number: valid_number }
+
+              expect(get(urls[:game_results])).to be_ok
+
+              expect(last_request.session).not_to include(:game)
+              expect(last_request.session).not_to include(:player)
+
+              expect(last_response.body).to include(I18n.t(:oops, player_name: player_name, status: :lose))
+            end
           end
         end
       end

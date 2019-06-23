@@ -14,6 +14,7 @@ group :development do
   gem 'fasterer', '~> 0.5.1'
   gem 'haml_lint', '~> 0.32.0'
   gem 'overcommit', '~> 0.48.0'
+  gem 'pry-byebug', '~> 3.7'
   gem 'rubocop', '~> 0.69.0'
   gem 'rubocop-performance', '~> 1.3'
 end

@@ -28,16 +28,30 @@ class AppController < BaseController
   end
 
   def game
-    return redirect_to :game if @session.present?
+    return show_page :game if @session.present?
 
-    return redirect_to :root unless @request[:player_name] && @request[:difficulty]
-
-    return redirect_to :root unless validate_player
+    return redirect_to :root unless params? && validate_player
 
     initialize_player
     initialize_game
 
     @session.save(player: @player, game: @game)
+
+    show_page :game
+  end
+
+  def submit_answer
+    return redirect_to :root unless @session.present?
+
+    guess_result = obtain_guess_result
+
+    return redirect_to :game if @game.errors.include?(CodebreakerDiz::GuessFormatError)
+
+    build_round_result(guess_result)
+
+    @session.save(player: @player, game: @game)
+
+    return redirect_to :game_results if game_finished?
 
     show_page :game
   end
@@ -54,21 +68,10 @@ class AppController < BaseController
     show_page :game
   end
 
-  def submit_answer
+  def game_results
+    return redirect_to :game if @session.present? && !game_finished?
     return redirect_to :root unless @session.present?
 
-    check_result = @game.check_guess(@request[:number])&.split('')
-
-    @round_result = check_result + Array.new(CodebreakerDiz::CODE_LENGTH - check_result.size)
-
-    @session.save(player: @player, game: @game)
-
-    return show_results if game_finished?
-
-    show_page :game
-  end
-
-  def show_results
     @status = @game.lose? ? :lose : :win
 
     save_results if @status == :win
@@ -92,6 +95,15 @@ class AppController < BaseController
     Database.save(data)
   end
 
+  def obtain_guess_result
+    @game.errors.clear
+    @game.check_guess(@request[:number])&.split('')
+  end
+
+  def build_round_result(guess_result)
+    @round_result = guess_result + Array.new(CodebreakerDiz::CODE_LENGTH - guess_result.size)
+  end
+
   def validate_player
     Player.name_valid?(@request[:player_name]) && Player.difficulty_valid?(@request[:difficulty])
   end
@@ -106,5 +118,9 @@ class AppController < BaseController
 
   def game_finished?
     @game.win? || @game.lose?
+  end
+
+  def params?
+    @request[:player_name] && @request[:difficulty]
   end
 end

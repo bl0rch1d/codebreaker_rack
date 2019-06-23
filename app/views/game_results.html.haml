@@ -7,11 +7,11 @@
       .container
         .row.fill-viewport.align-items-center.justify-content-center
           .col-12.col-md-6
-            .row
+            .row.justify-content-center
               .col-md-auto
                 %h1.text-white.title.inline-block Codebreaker 2019
             .row
-              .col.button
+              .col.button.text-center
                 %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
                   = I18n.t(:difficulty_title)
                   %span.badge.badge-light
@@ -25,8 +25,7 @@
                   %span.badge.badge-light
                     #{@game.hints_count}/#{DIFFICULTIES[@player.difficulty.intern][:hints]}
             %hr.mb-4/
-            .row
-              .text-center.m-auto
+            .row.justify-content-center
               - if @status == :win
                 %h3.text-white= I18n.t(:congrats, player_name: @player.name, status: @status)
               - else

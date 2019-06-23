@@ -25,10 +25,6 @@ class Database
       data.transform_values! { |value| value.size != 2 ? value.to_s : value }
     end
 
-    def get_diffculty_name_by_index(index)
-      CodebreakerDiz::DIFFICULTIES.keys[index.to_i].to_s
-    end
-
     def sort_data(data)
       data.sort_by { |value| [-value[:difficulty][0].to_i, value[:tries_used], value[:hints_used]] }
     end

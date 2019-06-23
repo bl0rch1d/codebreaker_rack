@@ -35,9 +35,10 @@ en:
     date: 'Date'
   
   short_rules: 'Try to guess 4-digit number, that consists of numbers in a range from 1 to 6.'
-  rules: "1. Each guess must consist of 4 digits from 1 to 6.
-          2. Numbers may be used more than once!
-          3. You win only if your guess is an exact match.
-          4. You lose if you fail to guess the code under 10 guesses.
-          5. '+' Indicates a number is in the correct position.
-          6. '-' Indicates a number is part of the code, but not in the right position."
+  rules_rows:
+    each_guess: 'Each guess must consist of 4 digits from 1 to 6.'
+    numbers_may: 'Numbers may be used more than once!'
+    win_only: 'You win only if your guess is an exact match.'
+    lose_if: 'You lose if you fail to guess the code under 10 guesses.'
+    plus_sign: "'+' Indicates a number is in the correct position."
+    minus_sign: "'-' Indicates a number is part of the code, but not in the right position."

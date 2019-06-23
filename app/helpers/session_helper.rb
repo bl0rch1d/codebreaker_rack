@@ -22,6 +22,6 @@ class SessionHelper
   end
 
   def present?
-    @request.session.key?(:game)
+    @request.session.key?(:game) && @request.session.key?(:player)
   end
 end

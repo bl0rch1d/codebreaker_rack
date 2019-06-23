@@ -62,3 +62,13 @@ input::-webkit-inner-spin-button {
 .scores {
   background: white;
 }
+
+/* === Custom === */
+
+.rules-title {
+  font-size: 40px;
+}
+
+ul {
+  list-style-type: decimal;
+}

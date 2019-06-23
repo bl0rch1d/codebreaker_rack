@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class BaseController
-  PATHS = ['./app/views/', './app/views/partials/'].freeze
   DIFFICULTIES = CodebreakerDiz::DIFFICULTIES
+  PATHS = ['./app/views/', './app/views/partials/'].freeze
+
+  private_constant :PATHS
 
   def self.find_views
     regex = Regexp.new('.+html.haml')

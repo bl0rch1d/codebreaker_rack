@@ -3,6 +3,7 @@
 require 'yaml'
 require 'haml'
 require 'i18n'
+require 'pry-byebug'
 
 require 'codebreaker_diz'
 
