@@ -41,12 +41,15 @@
               %hr.mb-4/
               %button.btn.btn-primary.btn-lg{:type => "submit"}
                 = I18n.t(:submit)
-              - if @hint || @game.hints_count == DIFFICULTIES[@player.difficulty.intern][:hints]
+              - if !@game.hints_count.zero?
                 %a.btn.btn-warning.btn-lg.float-right{:href => "/hint", :role => "button"}
                   = I18n.t(:show_hint_button)
-                  - if @hint
-                    - @hint.each do |hint|
+                  - if @game.data[:hints]
+                    - @game.data[:hints].each do |hint|
                       %span.badge.badge-light= hint
               - else
                 %a.btn.btn-warning.btn-lg.float-right{:disabled => "disabled", :role => "button"}
                   = I18n.t(:show_hint_button)
+                  - if @game.data[:hints]
+                    - @game.data[:hints].each do |hint|
+                      %span.badge.badge-light= hint

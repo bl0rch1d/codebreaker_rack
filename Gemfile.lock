@@ -10,7 +10,7 @@ GEM
     byebug (11.0.1)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    codebreaker_diz (0.3.pre.1)
+    codebreaker_diz (0.3.pre.2)
     coderay (1.1.2)
     colorize (0.8.1)
     concurrent-ruby (1.1.5)
@@ -96,7 +96,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundle-audit (~> 0.1.0)
-  codebreaker_diz (~> 0.3.pre.1)
+  codebreaker_diz (~> 0.3.pre.2)
   fasterer (~> 0.5.1)
   haml (~> 5.1, >= 5.1.1)
   haml_lint (~> 0.32.0)

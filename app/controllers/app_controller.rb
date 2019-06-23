@@ -5,6 +5,8 @@ class AppController < BaseController
     super(request, session)
 
     @player, @game = session.load if session.present?
+
+    @response_data = {}
   end
 
   def index
@@ -22,7 +24,7 @@ class AppController < BaseController
   def statistics
     return redirect_to :game if @session.present?
 
-    @data = Database.load
+    @response_data[:statistics] = Database.load
 
     show_page :statistics
   end
@@ -61,7 +63,7 @@ class AppController < BaseController
 
     return redirect_to :game if @game.hints_count.zero?
 
-    @hint = @game.generate_hint
+    obtain_hint
 
     @session.save(player: @player, game: @game)
 
@@ -72,9 +74,9 @@ class AppController < BaseController
     return redirect_to :game if @session.present? && !game_finished?
     return redirect_to :root unless @session.present?
 
-    @status = @game.lose? ? :lose : :win
+    @response_data[:status] = @game.lose? ? :lose : :win
 
-    save_results if @status == :win
+    save_results if @response_data[:status] == :win
 
     @session.destroy
 
@@ -100,8 +102,12 @@ class AppController < BaseController
     @game.check_guess(@request[:number])&.split('')
   end
 
+  def obtain_hint
+    @game.generate_hint
+  end
+
   def build_round_result(guess_result)
-    @round_result = guess_result + Array.new(CodebreakerDiz::CODE_LENGTH - guess_result.size)
+    @response_data[:round_result] = guess_result + Array.new(CodebreakerDiz::CODE_LENGTH - guess_result.size)
   end
 
   def validate_player

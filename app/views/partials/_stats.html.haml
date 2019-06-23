@@ -1,4 +1,4 @@
-- if @data.empty?
+- if @response_data[:statistics].empty?
   %h1.text-white.title= I18n.t(:empty_stats)
 - else
   .table-responsive-md.scores
@@ -12,7 +12,7 @@
         %th{:scope => "col"}= I18n.t('table_rows.hints_left')
         %th{:scope => "col"}= I18n.t('table_rows.date')
 
-      - @data.each_with_index do |data_set, index|
+      - @response_data[:statistics].each_with_index do |data_set, index|
         %tbody
           %tr
             %th{:scope => "row"}= index + 1
