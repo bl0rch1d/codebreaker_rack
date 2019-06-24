@@ -4,6 +4,9 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+# For Heroku
+ruby '2.6.3'
+
 gem 'codebreaker_diz', '~> 0.3.pre.3'
 gem 'haml', '~> 5.1', '>= 5.1.1'
 gem 'i18n', '~> 1.6'
