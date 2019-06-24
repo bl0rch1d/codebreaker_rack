@@ -4,7 +4,7 @@
   .table-responsive-md.scores
     %table.table.table-striped.table.table-sm
       %thead
-      %tr
+      %tr.text-center
         %th{:scope => "col"} #
         %th{:scope => "col"}= I18n.t('table_rows.name')
         %th{:scope => "col"}= I18n.t('table_rows.difficulty')
@@ -13,7 +13,7 @@
         %th{:scope => "col"}= I18n.t('table_rows.date')
 
       - @response_data[:statistics].each_with_index do |data_set, index|
-        %tbody
+        %tbody.text-center
           %tr
             %th{:scope => "row"}= index + 1
             %td= data_set[:player_name]

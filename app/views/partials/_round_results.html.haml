@@ -1,15 +1,15 @@
-- if @response_data[:round_result].nil?
+- if @game.matches.nil?
     %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
     %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
     %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
     %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x
 
 - else
-    - @response_data[:round_result].each do |result|
+    - (@game.matches.chars + Array.new(CodebreakerDiz::CODE_LENGTH - @game.matches.size)).each do |result|
         - case result
-        - when '+'
+        - when CodebreakerDiz::EXACT_MATCH_SIGN
             %button.btn.btn-success.marks{:disabled => "disabled", :type => "button"} +
-        - when '-'
+        - when CodebreakerDiz::NUMBER_MATCH_SIGN
             %button.btn.btn-primary.marks{:disabled => "disabled", :type => "button"} -
         - else
             %button.btn.btn-danger.marks{:disabled => "disabled", :type => "button"} x

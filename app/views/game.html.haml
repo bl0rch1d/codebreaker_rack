@@ -10,7 +10,7 @@
           .col-12.col-md-6
             .row
               .col-md-auto
-                %h1.text-white.title Codebreaker 2019
+                %h1.text-white.title= I18n.t(:project_title)
             %p.lead.text-white-70
               = I18n.t(:hello_message, player_name: @player.name)
               = I18n.t(:short_rules)

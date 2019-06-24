@@ -51,3 +51,6 @@ PreCommit:
   ForbiddenBranches:
     enabled: true
     branch_patterns: ['master']
+
+  LineEndings:
+    enabled: true

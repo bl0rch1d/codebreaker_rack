@@ -45,11 +45,9 @@ class AppController < BaseController
   def submit_answer
     return redirect_to :root unless @session.present?
 
-    guess_result = obtain_guess_result
+    obtain_guess_result
 
     return redirect_to :game if @game.errors.include?(CodebreakerDiz::GuessFormatError)
-
-    build_round_result(guess_result)
 
     @session.save(player: @player, game: @game)
 
@@ -104,10 +102,6 @@ class AppController < BaseController
 
   def obtain_hint
     @game.generate_hint
-  end
-
-  def build_round_result(guess_result)
-    @response_data[:round_result] = guess_result + Array.new(CodebreakerDiz::CODE_LENGTH - guess_result.size)
   end
 
   def validate_player
