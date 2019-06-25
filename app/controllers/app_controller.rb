@@ -10,20 +10,14 @@ class AppController < BaseController
   end
 
   def index
-    return redirect_to :game if @session.present?
-
     show_page :index
   end
 
   def rules
-    return redirect_to :game if @session.present?
-
     show_page :rules
   end
 
   def statistics
-    return redirect_to :game if @session.present?
-
     @response_data[:statistics] = Database.load
 
     show_page :statistics
@@ -43,8 +37,6 @@ class AppController < BaseController
   end
 
   def submit_answer
-    return redirect_to :root unless @session.present?
-
     obtain_guess_result
 
     return redirect_to :game if @game.errors.include?(CodebreakerDiz::GuessFormatError)
@@ -57,8 +49,6 @@ class AppController < BaseController
   end
 
   def hint
-    return redirect_to :root unless @session.present?
-
     return redirect_to :game if @game.hints_count.zero?
 
     obtain_hint
@@ -70,7 +60,6 @@ class AppController < BaseController
 
   def game_results
     return redirect_to :game if @session.present? && !game_finished?
-    return redirect_to :root unless @session.present?
 
     @response_data[:status] = @game.lose? ? :lose : :win
 

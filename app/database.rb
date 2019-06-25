@@ -22,11 +22,11 @@ class Database
     private
 
     def stringify(data)
-      data.transform_values! { |value| value.size != 2 ? value.to_s : value }
+      data.transform_values! { |value| value[1].is_a?(Symbol) ? value : value.to_s }
     end
 
     def sort_data(data)
-      data.sort_by { |value| [-value[:difficulty][0].to_i, value[:tries_used], value[:hints_used]] }
+      data.sort_by { |value| [-value[:difficulty][0], value[:tries_used], value[:hints_used]] }
     end
   end
 end
