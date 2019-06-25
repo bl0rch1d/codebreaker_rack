@@ -94,17 +94,17 @@ RSpec.describe CodebreakerRack do
 
     context 'when #game' do
       # === Need Fix ===
-      # context 'when not active' do
-      #   let(:auth_locations) { %i[game submit_answer hint] }
+      context 'when not active' do
+        let(:auth_locations) { %i[game submit_answer hint] }
 
-      #   it do
-      #     auth_locations.each do |location|
-      #       expect(get(urls[location])).to be_redirect
+        it do
+          auth_locations.each do |location|
+            expect(get(urls[location])).to be_redirect
 
-      #       expect(last_response.header['Location']).to eq(urls[:root])
-      #     end
-      #   end
-      # end
+            expect(last_response.header['Location']).to eq(urls[:root])
+          end
+        end
+      end
 
       context 'when active' do
         let(:player_name) { 'Euler' }
@@ -118,18 +118,18 @@ RSpec.describe CodebreakerRack do
         end
 
         # === Need Fix ===
-        # it do
-        #   free_locations.each do |location|
-        #     expect(get(urls[location])).to be_redirect
+        it do
+          free_locations.each do |location|
+            expect(get(urls[location])).to be_redirect
 
-        #     expect(last_response.header['Location']).to eq(urls[:game])
-        #   end
+            expect(last_response.header['Location']).to eq(urls[:game])
+          end
 
-        #   expect(last_response.header['Location']).to eq(urls[:game])
+          expect(last_response.header['Location']).to eq(urls[:game])
 
-        #   2.times { get(urls[:hint]) }
-        #   expect(get(urls[:hint])).to be_redirect
-        # end
+          2.times { get(urls[:hint]) }
+          expect(get(urls[:hint])).to be_redirect
+        end
 
         context 'when start game' do
           context 'with invalid params' do
