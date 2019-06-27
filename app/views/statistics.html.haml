@@ -1,7 +1,7 @@
 !!!
 %html.mdl-js{:lang => "en"}
   %head
-    = render VIEWS[:partial][:_head]
+    = render BaseController.views[:partial][:_head]
   %body
     %section#introduction
       .container
@@ -12,6 +12,6 @@
                 %h1.text-white.title= I18n.t(:project_title)
             %p.lead.text-white-70= I18n.t(:top_players_title)
             %hr.mb-4/
-            = render VIEWS[:partial][:_stats]
+            = render BaseController.views[:partial][:_stats]
             %hr.mb-4/
             %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}= I18n.t(:home_button)

@@ -1,7 +1,7 @@
 !!!
 %html.mdl-js{:lang => "en"}
   %head
-    = render VIEWS[:partial][:_head]
+    = render BaseController.views[:partial][:_head]
   %body
     %section#introduction
       = @game.instance_variable_get(:@secret)
@@ -37,7 +37,7 @@
                 %input.form-control.guess_input{:autocomplete => "off", :name => "number", :pattern => "^[1-6]{4}$", :placeholder => "1234", :required => ""}/
               .form-group.guess_markers_list
                 #guess_marker
-                = render VIEWS[:partial][:_round_results]
+                = render  BaseController.views[:partial][:_round_results]
               %hr.mb-4/
               %button.btn.btn-primary.btn-lg{:type => "submit"}
                 = I18n.t(:submit)

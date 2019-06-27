@@ -19,8 +19,10 @@ class BaseController
 
     views
   end
-
-  VIEWS ||= find_views
+  
+  def self.views
+    @views ||= find_views
+  end
 
   def initialize(request, session)
     @request  = request
@@ -32,7 +34,7 @@ class BaseController
   private
 
   def show_page(name)
-    @response.write(render(VIEWS[:common][name]))
+    @response.write(render(self.class.views[:common][name]))
 
     @response
   end
@@ -48,7 +50,7 @@ class BaseController
   def not_found
     @response.status = 404
 
-    @response.write(render(VIEWS[:common][:'404']))
+    @response.write(render(self.class.views[:common][:'404']))
 
     @response
   end

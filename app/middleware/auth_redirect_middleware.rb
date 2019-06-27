@@ -17,9 +17,9 @@ module Rack
     def call(env)
       @request = Rack::Request.new(env)
 
-      return [@status, { 'Location' => '/' }, ['']] if !authenticated? && auth_location?
+      return [@status, { 'Location' => Router::URLS[:root] }, ['']] if !authenticated? && auth_location?
 
-      return [@status, { 'Location' => '/game' }, ['']] if authenticated? && free_location?
+      return [@status, { 'Location' => Router::URLS[:game] }, ['']] if authenticated? && free_location?
 
       @app.call(env)
     end
