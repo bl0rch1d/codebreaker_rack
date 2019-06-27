@@ -19,7 +19,7 @@ class BaseController
 
     views
   end
-  
+
   def self.views
     @views ||= find_views
   end
