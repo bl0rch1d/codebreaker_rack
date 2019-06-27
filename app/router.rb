@@ -13,7 +13,7 @@ class Router
 
   def initialize(request, session)
     @request = request
-    @controller = AppController.new(request, session)
+    @controller = Controllers::AppController.new(request, session)
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity

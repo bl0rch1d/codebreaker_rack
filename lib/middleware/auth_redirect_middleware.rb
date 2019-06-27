@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Rack
-  class AuthRedirect
+module Middleware
+  class AuthRedirectMiddleware
     AUTH_LOCATIONS = ['/game_results', '/hint', '/submit_answer'].freeze
     FREE_LOCATIONS = ['/', '/rules', '/statistics'].freeze
 

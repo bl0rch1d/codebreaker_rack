@@ -8,7 +8,7 @@ class CodebreakerRack
   def initialize(env)
     @request = Rack::Request.new(env)
 
-    @router = Router.new(@request, SessionHelper.new(@request))
+    @router = Router.new(@request, Helpers::SessionHelper.new(@request))
   end
 
   def response

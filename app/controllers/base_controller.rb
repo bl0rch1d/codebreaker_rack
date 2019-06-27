@@ -1,65 +1,67 @@
 # frozen_string_literal: true
 
-class BaseController
-  DIFFICULTIES = CodebreakerDiz::DIFFICULTIES
-  PATHS = ['./app/views/', './app/views/partials/'].freeze
+module Controllers
+  class BaseController
+    DIFFICULTIES = CodebreakerDiz::DIFFICULTIES
+    PATHS = ['./app/views/', './app/views/partials/'].freeze
 
-  private_constant :PATHS
+    private_constant :PATHS
 
-  def self.find_views
-    regex = Regexp.new('.+html.haml')
+    def self.find_views
+      regex = Regexp.new('.+html.haml')
 
-    views = { common: {}, partial: {} }
+      views = { common: {}, partial: {} }
 
-    PATHS.each_with_index do |path, index|
-      Dir.entries(path).each do |file|
-        views[views.keys[index]][file.split('.').first.intern] = file if file.match?(regex)
+      PATHS.each_with_index do |path, index|
+        Dir.entries(path).each do |file|
+          views[views.keys[index]][file.split('.').first.intern] = file if file.match?(regex)
+        end
       end
+
+      views
     end
 
-    views
-  end
+    def self.views
+      @views ||= find_views
+    end
 
-  def self.views
-    @views ||= find_views
-  end
+    def initialize(request, session)
+      @request  = request
+      @session  = session
 
-  def initialize(request, session)
-    @request  = request
-    @session  = session
+      @response = Rack::Response.new
+    end
 
-    @response = Rack::Response.new
-  end
+    private
 
-  private
+    def show_page(name)
+      @response.write(render(self.class.views[:common][name]))
 
-  def show_page(name)
-    @response.write(render(self.class.views[:common][name]))
+      @response
+    end
 
-    @response
-  end
+    def redirect_to(page)
+      uri = page == :root ? '/' : "/#{page}"
 
-  def redirect_to(page)
-    uri = page == :root ? '/' : "/#{page}"
+      @response.redirect(uri)
 
-    @response.redirect(uri)
+      @response
+    end
 
-    @response
-  end
+    def not_found
+      @response.status = 404
 
-  def not_found
-    @response.status = 404
+      @response.write(render(self.class.views[:common][:'404']))
 
-    @response.write(render(self.class.views[:common][:'404']))
+      @response
+    end
 
-    @response
-  end
+    def render(template)
+      view_path = template.match?(/^_/) ? 'partials/' + template : template
 
-  def render(template)
-    view_path = template.match?(/^_/) ? 'partials/' + template : template
+      path = File.expand_path("../../views/#{view_path}", __FILE__)
 
-    path = File.expand_path("../../views/#{view_path}", __FILE__)
-
-    Haml::Engine.new(File.read(path)).render(binding)
+      Haml::Engine.new(File.read(path)).render(binding)
+    end
   end
 end

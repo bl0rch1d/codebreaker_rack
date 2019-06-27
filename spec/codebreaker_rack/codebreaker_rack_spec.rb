@@ -109,7 +109,7 @@ RSpec.describe CodebreakerRack do
         let(:player_name) { 'Euler' }
         let(:difficulty) { :hacker }
         let(:valid_number) { '1234' }
-        let(:tries_count) { BaseController::DIFFICULTIES[difficulty][:tries] }
+        let(:tries_count) { Controllers::BaseController::DIFFICULTIES[difficulty][:tries] }
         let(:free_locations) { %i[root rules statistics] }
 
         before do
