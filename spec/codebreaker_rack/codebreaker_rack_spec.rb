@@ -93,7 +93,6 @@ RSpec.describe CodebreakerRack do
     end
 
     context 'when #game' do
-      # === Need Fix ===
       context 'when not active' do
         let(:auth_locations) { %i[game submit_answer hint] }
 
@@ -117,7 +116,6 @@ RSpec.describe CodebreakerRack do
           post urls[:game], player_name: player_name, difficulty: difficulty
         end
 
-        # === Need Fix ===
         it do
           free_locations.each do |location|
             expect(get(urls[location])).to be_redirect

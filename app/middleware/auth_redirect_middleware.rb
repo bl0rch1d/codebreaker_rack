@@ -31,11 +31,11 @@ module Rack
     end
 
     def auth_location?
-      AUTH_LOCATIONS.include?(@request.get_header('REQUEST_PATH'))
+      AUTH_LOCATIONS.include?(@request.get_header('PATH_INFO'))
     end
 
     def free_location?
-      FREE_LOCATIONS.include?(@request.get_header('REQUEST_PATH'))
+      FREE_LOCATIONS.include?(@request.get_header('PATH_INFO'))
     end
   end
 end
