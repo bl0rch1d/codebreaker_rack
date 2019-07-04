@@ -1,0 +1,39 @@
+!!!
+%html.mdl-js{:lang => "en"}
+  %head
+    = render BaseController.views[:partial][:_head]
+  %body
+    %section#introduction
+      .container
+        .row.fill-viewport.align-items-center.justify-content-center
+          .col-12.col-md-6
+            .row.justify-content-center
+              .col-md-auto
+                %h1.text-white.title.inline-block= I18n.t(:project_title)
+            .row
+              .col.button.text-center
+                %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+                  = I18n.t(:difficulty_title)
+                  %span.badge.badge-light
+                    = @player.difficulty
+                %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+                  = I18n.t(:tries_left)
+                  %span.badge.badge-light
+                    #{@game.tries_count}/#{DIFFICULTIES[@player.difficulty.intern][:tries]}
+                %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+                  = I18n.t(:hints_left)
+                  %span.badge.badge-light
+                    #{@game.hints_count}/#{DIFFICULTIES[@player.difficulty.intern][:hints]}
+            %hr.mb-4/
+            .row.justify-content-center
+              - if @response_data[:status] == :win
+                %h3.text-white= I18n.t(:congrats, player_name: @player.name, status: @response_data[:status])
+              - else
+                %h3.text-white= I18n.t(:oops, player_name: @player.name, status: @response_data[:status])
+                %h3.text-white= I18n.t(:secret_code_was, secret: @game.data[:secret].join)
+              %img.img-fluid{:alt => "status", :src => "app/assets/images/#{@response_data[:status]}.gif"}/
+            %hr.mb-4/
+            %a.btn.btn-primary.btn-lg{:href => "/", :role => "button"}
+              = I18n.t(:play_again_button)
+            %a.btn.btn-success.btn-lg.float-right{:href => "/statistics", :role => "button"}
+              = I18n.t(:statistics_button)

@@ -1,0 +1,22 @@
+!!!
+%html.mdl-js{:lang => "en"}
+  %head
+    = render BaseController.views[:partial][:_head]
+  %body
+    %section#introduction
+      .container
+        .row.fill-viewport.align-items-center.justify-content-center
+          .col-12.col-md-6
+            .row.justify-content-center
+              %h1.lead.text-white-70.rules-title Game rules
+            %hr.mb-4.mt-2
+            .row 
+              %ul.text-white-70
+                %li= I18n.t('rules_rows.each_guess')
+                %li= I18n.t('rules_rows.numbers_may')
+                %li= I18n.t('rules_rows.win_only')
+                %li= I18n.t('rules_rows.lose_if')
+                %li= I18n.t('rules_rows.plus_sign')
+                %li= I18n.t('rules_rows.minus_sign')
+            .row.justify-content-center
+              %a.btn.btn-warning.btn-lg.mt-3{:href => "/", :role => "button"}= I18n.t(:home_button)

@@ -1,0 +1,9 @@
+.history
+.DS_Store
+
+/coverage/
+/.vscode/
+/node_modules/
+
+*.swp
+scores.yml

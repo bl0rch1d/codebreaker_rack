@@ -1,0 +1,46 @@
+en:
+  project_title: 'Codebreaker 2019'
+
+  submit: "Submit"
+  
+  player_name_input: "Player's name:"
+  difficulty_input: "Game difficulty:"
+  difficulty_select_default: 'Choose game difficulty...'
+  empty_stats: 'There are no winners yet! Be the first!'
+  
+  hello_message: "Hello, %{player_name}!"
+  
+  difficulty_title: 'Difficulty:'
+  top_players_title: 'Top of Players:'
+
+  tries_left: 'Attempts Left:'
+  hints_left: 'Hints Left:'
+  
+  congrats: "Congratulations, %{player_name}! You %{status} the game!"
+  oops: "Oops, %{player_name}! You %{status} the game!"
+  secret_code_was: 'Secret code was: %{secret}'
+  
+  home_button: 'Home'
+  play_again_button: 'Play again!'
+  statistics_button: 'Statistics'
+  show_hint_button: 'Show hint!'
+  rules_button: 'Rules'
+  start_game_button: 'Start the game!'
+  
+  page_not_found: 'PAGE NOT FOUND'
+
+  table_rows:
+    name: 'Name'
+    difficulty: 'Difficulty'
+    tries_left: 'Tries left'
+    hints_left: 'Hints left'
+    date: 'Date'
+  
+  short_rules: 'Try to guess 4-digit number, that consists of numbers in a range from 1 to 6.'
+  rules_rows:
+    each_guess: 'Each guess must consist of 4 digits from 1 to 6.'
+    numbers_may: 'Numbers may be used more than once!'
+    win_only: 'You win only if your guess is an exact match.'
+    lose_if: 'You lose if you fail to guess the code under 10 guesses.'
+    plus_sign: "'+' Indicates a number is in the correct position."
+    minus_sign: "'-' Indicates a number is part of the code, but not in the right position."

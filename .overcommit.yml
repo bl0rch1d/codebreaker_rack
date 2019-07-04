@@ -1,0 +1,56 @@
+CommitMsg:
+  CapitalizedSubject:
+    enabled: false
+
+  EmptyMessage:
+    enabled: false
+
+  TrailingPeriod:
+    enabled: true
+
+  TextWidth:
+    enabled: false
+
+PreCommit:
+  ALL:
+    on_warn: fail
+
+  AuthorEmail:
+    enabled: false
+
+  AuthorName:
+    enabled: false
+
+  MergeConflicts:
+    enabled: true
+    
+  YamlSyntax:
+    enabled: true
+    
+  BundleCheck:
+    enabled: true
+
+  Rubocop:
+    enabled: true
+
+  Fasterer:
+    enabled: true
+
+  BundleAudit:
+    enabled: true
+
+  RSpec:
+    enabled: true
+
+  BundleOutdated:
+    enabled: true
+
+  ExecutePermissions:
+    enabled: false
+
+  ForbiddenBranches:
+    enabled: true
+    branch_patterns: ['master']
+
+  LineEndings:
+    enabled: true

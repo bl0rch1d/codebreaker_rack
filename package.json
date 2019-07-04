@@ -1,0 +1,14 @@
+{
+  "name": "codebreaker_rack",
+  "version": "1.0.0",
+  "description": "Codebreaker game implemented with Rack",
+  "main": "index.js",
+  "repository": "https://github.com/bl0rch1d/codebreaker_rack",
+  "author": "bl0rch1d",
+  "license": "MIT",
+  "private": null,
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1"
+  }
+}

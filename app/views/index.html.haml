@@ -1,0 +1,32 @@
+!!!
+%html.mdl-js{:lang => "en"}
+  %head
+    = render BaseController.views[:partial][:_head]
+  %body
+    %section#introduction
+      .container
+        .row.fill-viewport.align-items-center.justify-content-center
+          .col-12.col-md-6
+            .row.justify-content-center
+              .col-md-auto
+                %h1.text-white.title= I18n.t(:project_title)
+            .row
+              %p.lead.text-white-70
+                = I18n.t(:short_rules)
+            %hr.mb-4/
+            %form{:action => "/game", :method => "post"}
+              .form-group
+                %label.lead.label{:for => "player_name"}= I18n.t(:player_name_input)
+                %input#player_name.form-control{:autofocus => "", :name => "player_name", :pattern => "^[\\w\\u0400-\\u04ff]{3,20}$", :placeholder => "Your name", :required => ""}/
+              .form-group
+                %label.lead.label{:for => "difficulty"}= I18n.t(:difficulty_input)
+                %select.custom-select{:name => "difficulty", :required => ""}
+                  %option{:value => ""}= I18n.t(:difficulty_select_default)
+                  %option{:value => "kid"} #{DIFFICULTIES.keys[0]} - #{DIFFICULTIES[:kid][:tries]} attempts - #{DIFFICULTIES[:kid][:hints]} hints
+                  %option{:value => "average"} #{DIFFICULTIES.keys[1]} - #{DIFFICULTIES[:average][:tries]} attempts - #{DIFFICULTIES[:average][:hints]} hints
+                  %option{:value => "hacker"} #{DIFFICULTIES.keys[2]} - #{DIFFICULTIES[:kid][:tries]} attempts - #{DIFFICULTIES[:hacker][:hints]} hints
+              %hr.mb-4/
+              %button.btn.btn-primary.btn-lg{:type => "submit"}= I18n.t(:start_game_button)
+              %span.float-right
+                %a.btn.btn-warning.btn-lg{:href => "/rules", :role => "button"}= I18n.t(:rules_button)
+                %a.btn.btn-success.btn-lg{:href => "/statistics", :role => "button"}= I18n.t(:statistics_button)

@@ -1,0 +1,55 @@
+!!!
+%html.mdl-js{:lang => "en"}
+  %head
+    = render BaseController.views[:partial][:_head]
+  %body
+    %section#introduction
+      = @game.instance_variable_get(:@secret)
+      .container
+        .row.fill-viewport.align-items-center.justify-content-center
+          .col-12.col-md-6
+            .row
+              .col-md-auto
+                %h1.text-white.title= I18n.t(:project_title)
+            %p.lead.text-white-70
+              = I18n.t(:hello_message, player_name: @player.name)
+              = I18n.t(:short_rules)
+            %hr.mb-4/
+            .row
+              .col.button
+                %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+                  = I18n.t(:difficulty_title)
+                  %span.badge.badge-light
+                    = @player.difficulty
+              .col.text-center.button
+                %button.btn.btn-primary{:disabled => "disabled", :type => "button"}
+                  = I18n.t(:tries_left)
+                  %span.badge.badge-light
+                    = @game.tries_count
+              .col.button
+                %button.btn.btn-primary.float-right{:disabled => "disabled", :type => "button"}
+                  = I18n.t(:hints_left)
+                  %span.badge.badge-light
+                    = @game.hints_count
+            %hr.mb-4/
+            %form{:action => "/submit_answer", :method => "post"}
+              .form-group
+                %input.form-control.guess_input{:autocomplete => "off", :name => "number", :pattern => "^[1-6]{4}$", :placeholder => "1234", :required => ""}/
+              .form-group.guess_markers_list
+                #guess_marker
+                = render  BaseController.views[:partial][:_round_results]
+              %hr.mb-4/
+              %button.btn.btn-primary.btn-lg{:type => "submit"}
+                = I18n.t(:submit)
+              - if !@game.hints_count.zero?
+                %a.btn.btn-warning.btn-lg.float-right{:href => "/hint", :role => "button"}
+                  = I18n.t(:show_hint_button)
+                  - if @game.data[:hints]
+                    - @game.data[:hints].each do |hint|
+                      %span.badge.badge-light= hint
+              - else
+                %a.btn.btn-warning.btn-lg.float-right{:disabled => "disabled", :role => "button"}
+                  = I18n.t(:show_hint_button)
+                  - if @game.data[:hints]
+                    - @game.data[:hints].each do |hint|
+                      %span.badge.badge-light= hint
