@@ -10,7 +10,7 @@ ruby '2.6.3'
 gem 'codebreaker_diz', '~> 0.3.pre.3'
 gem 'haml', '~> 5.1', '>= 5.1.1'
 gem 'i18n', '~> 1.6'
-gem 'rack', '~> 2.0', '>= 2.0.7'
+gem 'rack', '~> 2.1'
 
 group :development do
   gem 'bundle-audit', '~> 0.1.0'
